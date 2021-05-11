@@ -1,0 +1,68 @@
+/*A DNA string, also called a DNA strand, is a ?nite sequence consisting of the four letters A, C, G, and T in any order.
+The four letters stand for the four nucleotides: adenine, cytosine, guanine, and thymine. Nucleotides, which are the 
+molecular units from which DNA and RNA are composed, are also called bases. Each nucleotide has a complement among the 
+four: A and T are complements, and C and G are complements. Complements are chemically-related in that when they are 
+close to each other, they form hydrogen bonds between them. For example, the complement of TGGC is ACCG, and
+the complement of TCGA is AGCT. Notice that this last string has the property that its complement is the same as the 
+string when read backward. A sequence of nucleotides is palindromic if the complement read right to left is the same as 
+the string read from left to right. For example, the DNA string TGCAACGCGTTGCA is palindromic because the complement is 
+ACGTTGCGCAACGT, which when read backwards is the original string.
+
+Write a recursive function that, when given a DNA 
+string s, returns true or false depending on whether s is palindromic. Note that this is different from the standard
+de?nition of palindrome.*/
+bool isPalRec(string str, string rev, int s, int e)
+{
+	if (s == str.length()-1)
+		return true;
+	if (str[s] != rev[e])
+		return false;	
+	
+		return isPalRec(str, rev, s + 1, e - 1);
+
+	return true;
+
+}
+
+string complementStr(string& str)
+{
+	int n = str.length()-1;
+	
+	string s = "";
+	// Swap character starting from two
+	// corners
+	for (int i = 0; i <= n; i++)
+	{
+		if (str[i]=='A')
+		{
+			s = s + 'T';
+		}
+		else if (str[i] == 'T')
+		{
+			s = s + 'A';
+		}
+		else if (str[i] == 'C')
+		{
+			s = s + 'G';
+		}
+		else if (str[i] == 'G')
+		{
+			s = s + 'C';
+		}
+	}
+	
+		
+	return s;
+}
+
+bool ispalindromic(string str)
+{
+	int n = str.length();
+	string rev = complementStr(str);
+	// An empty string is 
+	// considered as palindrome
+	if (n == 0)
+		return true;
+
+	return isPalRec(str, rev, 0,n - 1);
+}
